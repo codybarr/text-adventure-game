@@ -3,7 +3,12 @@ export const SWORD = {
   name: 'Sword',
 }
 
+export const HATCHET_ITEM = {
+  plural: false,
+  name: 'hatchet',
+}
+
 export const MATCHES = {
   plural: true,
-  name: 'Matches',
+  name: 'matches',
 }
