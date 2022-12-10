@@ -2,6 +2,7 @@ import {
   bgGreen,
   black,
   red,
+  brightCyan,
   white,
 } from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
@@ -9,44 +10,61 @@ import { clear } from "https://deno.land/x/clear/mod.ts";
 
 import * as GAME from "./game.ts";
 import { MATCHES } from "./items.ts";
-import { logPlayer, checkValid } from "./logic.ts";
+import { logPlayer, evaluateResponse } from "./logic.ts";
 
 const QUESTION = "What would you like to do?";
 
 let loop = true;
 let player = { conditions: [], inventory: [MATCHES] };
-let gameStepFn = GAME.BEGIN;
-let gameStep = GAME.BEGIN(player);
+let getGameStep = GAME.BEGIN;
+let invalidMessage = '';
+let error = '';
 
 clear(true);
 
 // game loop
 while (loop) {
-  console.log(bgGreen(black(gameStep.message)));
-  console.log("\n");
+  const gameStep = getGameStep(player);
+
+  logGameStepMessage(gameStep);
+
+  logInvalidMessage();
+
+  logErrorMessage();
+
   logPlayer(player);
 
-  const response = prompt(white(QUESTION));
+  const response = prompt(brightCyan(QUESTION));
 
   const {
-    error,
-    gameStepFn: newGameStepFn,
-    invalidMessage,
+    error: newError,
+    getGameStep: newgetGameStep,
+    invalidMessage: newInvalidMessage,
     updatedPlayer,
-  } = checkValid({ gameStep, gameStepFn, response, player });
+  } = evaluateResponse({ getGameStep, response, player });
 
+  getGameStep = newgetGameStep;
+  player = updatedPlayer;
+  invalidMessage = newInvalidMessage;
+  error = newError;
+
+}
+
+function logGameStepMessage({ message }) {
+  console.log("\n");
+  console.log(bgGreen(black(message)));
+}
+
+function logInvalidMessage() {
   if (invalidMessage) {
+    console.log("\n");
     console.log(red(invalidMessage));
   }
+}
 
-  player = updatedPlayer;
-
+function logErrorMessage() {
   if (error) {
+    console.log("\n");
     console.log(red(error));
   }
-
-  console.log("\n");
-
-  gameStepFn = newGameStepFn;
-  gameStep = newGameStepFn(player);
 }

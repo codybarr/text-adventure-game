@@ -9,7 +9,7 @@ import {
   Condition,
 } from "./types.ts";
 
-import { blue } from "https://deno.land/std@0.162.0/fmt/colors.ts";
+import { blue, white } from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
 const answerMatchRegex = (answer: string[]) => {
   const [verbs, nouns] = answer;
@@ -44,17 +44,19 @@ export const formatInventoryList = (inventory: Item[]) =>
 export const logPlayer = (player: Player): void => {
   const { conditions, inventory } = player;
 
-  if (conditions.length > 0) {
-    console.log(blue(`You are ${formatConditionsList(conditions)}`));
+  if (conditions.length || inventory.length) {
+    console.log("\n");
   }
-  if (inventory.length > 0) {
-    console.log(blue(`You have ${formatInventoryList(inventory)}`));
+  if (conditions.length) {
+    console.log(white(`You are ${formatConditionsList(conditions)}`));
+  }
+  if (inventory.length) {
+    console.log(white(`You have ${formatInventoryList(inventory)}`));
   }
 };
 
-export interface CheckValidProps {
-  gameStep: GameStep;
-  gameStepFn: Function;
+export interface EvaluateResponseProps {
+  getGameStep: Function;
   response: string;
   player: Player;
 }
@@ -62,22 +64,16 @@ export interface CheckValidProps {
 interface GameStepVerification {
   invalidMessage?: string;
   error?: string;
-  gameStep: GameStep;
-  gameStepFn: Function;
+  getGameStep: Function;
   updatedPlayer: Player;
 }
 
-export const checkValid = ({
-  gameStep,
-  gameStepFn,
+export const evaluateResponse = ({
+  getGameStep,
   response,
   player,
-}: CheckValidProps): GameStepVerification => {
-  const { valid, invalid } = gameStep;
-
-  // if there's an invalid match, return it
-  // if there's a valid match return that
-  // otherwise just return failure
+}: EvaluateResponseProps): GameStepVerification => {
+  const { valid, invalid } = getGameStep(player);
 
   const invalidMatch = invalid.find(({ answer }: InvalidStep) =>
     checkAnswerMatch({ answer, response, player })
@@ -85,8 +81,7 @@ export const checkValid = ({
   if (invalidMatch) {
     return {
       invalidMessage: invalidMatch.message,
-      gameStep,
-      gameStepFn,
+      getGameStep,
       updatedPlayer: player,
     };
   }
@@ -106,13 +101,12 @@ export const checkValid = ({
         (item) => !validMatch.removeFromInventory.includes(item)
       );
     }
-    return { gameStepFn: validMatch.nextStep, gameStep: validMatch.nextStep(player), updatedPlayer: player };
+    return { getGameStep: validMatch.nextStep, updatedPlayer: player };
   }
 
   return {
     error: `You cannot ${response}`,
-    gameStepFn,
-    gameStep,
+    getGameStep,
     updatedPlayer: player,
   };
 };
