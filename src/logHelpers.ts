@@ -3,7 +3,8 @@ import {
   bgGreen,
   black,
   red,
-  white
+  white,
+  italic
 } from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
 export const logPlayer = (player: Player): void => {
@@ -13,10 +14,10 @@ export const logPlayer = (player: Player): void => {
     console.log("\n");
   }
   if (conditions.length) {
-    console.log(white(`You are ${formatConditionsList(conditions)}`));
+    console.log(italic(white(`You are ${formatConditionsList(conditions)}`)));
   }
   if (inventory.length) {
-    console.log(white(`You have ${formatInventoryList(inventory)}`));
+    console.log(italic(white(`You have ${formatInventoryList(inventory)}`)));
   }
 };
 

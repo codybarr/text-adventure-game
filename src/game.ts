@@ -130,7 +130,7 @@ export const BEGIN = ({ inventory }) => {
     },
   ];
 
-  if (inventory.some((item) => item === MATCHES)) {
+  if (inventory.some((item) => item.name === MATCHES.name)) {
     valid.push({
       answer: ["light", "match"],
       nextStep: MATCH,
