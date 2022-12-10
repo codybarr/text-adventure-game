@@ -33,3 +33,16 @@ export interface Item {
   name: string
   plural: boolean
 }
+
+export interface EvaluateResponseProps {
+  getGameStep: Function;
+  response: string;
+  player: Player;
+}
+
+export interface GameStepVerification {
+  invalidMessage?: string;
+  error?: string;
+  getGameStep: Function;
+  updatedPlayer: Player;
+}

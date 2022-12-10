@@ -10,9 +10,8 @@ import {
 export const logPlayer = (player: Player): void => {
   const { conditions, inventory } = player;
 
-  if (conditions.length || inventory.length) {
-    console.log("\n");
-  }
+  console.log("\n");
+
   if (conditions.length) {
     console.log(italic(white(`You are ${formatConditionsList(conditions)}`)));
   }

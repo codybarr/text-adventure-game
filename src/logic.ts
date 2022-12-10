@@ -1,15 +1,11 @@
 import * as GAME from "./game.ts";
 import {
   AnswerResponse,
-  GameStep,
+  GameStepVerification,
+  EvaluateResponseProps,
   InvalidStep,
   ValidStep,
-  Player,
-  Item,
-  Condition,
 } from "./types.ts";
-
-import { blue, white } from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
 const answerMatchRegex = (answer: string[]) => {
   const [verbs, nouns] = answer;
@@ -30,18 +26,6 @@ export const checkAnswerMatch = ({ answer, response }: AnswerResponse) => {
   return regex.test(response);
 };
 
-export interface EvaluateResponseProps {
-  getGameStep: Function;
-  response: string;
-  player: Player;
-}
-
-interface GameStepVerification {
-  invalidMessage?: string;
-  error?: string;
-  getGameStep: Function;
-  updatedPlayer: Player;
-}
 
 export const evaluateResponse = ({
   getGameStep,
