@@ -1,17 +1,10 @@
 import { Condition, Item, Player } from "./types.ts";
-import { white } from "https://deno.land/std@0.162.0/fmt/colors.ts";
-
-export const formatConditionsList = (conditions: Condition[]) =>
-  conditions.reduce(
-    (prev, curr, index) => `${prev}${index !== 0 ? "," : ""}${curr.name}`,
-    ""
-  );
-
-export const formatInventoryList = (inventory: Item[]) =>
-  inventory
-    .map(({ plural, name }: Item) => `${plural ? "" : "a "}${name}`)
-    .join(", ");
-
+import {
+  bgGreen,
+  black,
+  red,
+  white
+} from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
 export const logPlayer = (player: Player): void => {
   const { conditions, inventory } = player;
@@ -26,3 +19,35 @@ export const logPlayer = (player: Player): void => {
     console.log(white(`You have ${formatInventoryList(inventory)}`));
   }
 };
+
+function formatConditionsList(conditions: Condition[]) {
+  return conditions.reduce(
+    (prev, curr, index) => `${prev}${index !== 0 ? "," : ""}${curr.name}`,
+    ""
+  );
+}
+
+function formatInventoryList(inventory: Item[]) {
+  return inventory
+    .map(({ plural, name }: Item) => `${plural ? "" : "a "}${name}`)
+    .join(", ");
+}
+
+export const logGameStepMessage = ({ message }) => {
+  console.log("\n");
+  console.log(bgGreen(black(message)));
+}
+
+export const logInvalidMessage = (invalidMessage) => {
+  if (invalidMessage) {
+    console.log("\n");
+    console.log(red(invalidMessage));
+  }
+}
+
+export const logErrorMessage = (error) => {
+  if (error) {
+    console.log("\n");
+    console.log(red(error));
+  }
+}
