@@ -21,8 +21,9 @@ export const logPlayer = (player: Player): void => {
 };
 
 function formatConditionsList(conditions: Condition[]) {
+  const shouldLogAnd = (index) => (index === conditions.length - 1) && conditions.length > 1;
   return conditions.reduce(
-    (prev, curr, index) => `${prev}${index !== 0 ? "," : ""}${curr.name}`,
+    (prev, curr, index) => `${prev}${index !== 0 ? ", " : ""}${shouldLogAnd(index) ? 'and ' : ''}${curr.name}`,
     ""
   );
 }

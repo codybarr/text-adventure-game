@@ -1,4 +1,4 @@
-import { WET } from "./conditions.ts";
+import { WET, ABOUT_TO_DROWN, DEAD } from "./conditions.ts";
 import { MATCHES_ITEM, HATCHET_ITEM } from "./items.ts";
 
 export const CHEST = () => ({
@@ -40,6 +40,8 @@ export const MERMAID_SURFACES = () => ({
 
 export const DROWNED = () => ({
   message: "You've Drowned.",
+  valid: [],
+  invalid: [],
 });
 
 export const SHADOW_SIGHTING = () => ({
@@ -49,14 +51,16 @@ export const SHADOW_SIGHTING = () => ({
     {
       answer: ["swim get", "surface up air"],
       nextStep: MERMAID_SURFACES,
+      removeConditions: [ABOUT_TO_DROWN],
     },
-  ],
-  invalid: [
     {
       answer: ["attack", "it tail creature"],
       nextStep: DROWNED,
+      conditions: [DEAD],
+      removeConditions: [ABOUT_TO_DROWN, WET],
     },
   ],
+  invalid: [],
 });
 
 export const BACK_TO_SHORE = () => ({
@@ -87,6 +91,7 @@ export const POOL_DEPTHS = () => ({
     {
       answer: ["approach stay wait towards", "shadow figure it"],
       nextStep: SHADOW_SIGHTING,
+      conditions: [ABOUT_TO_DROWN]
     },
     {
       answer: ["swim get", "away surface shore"],

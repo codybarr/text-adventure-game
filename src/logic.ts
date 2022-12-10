@@ -52,6 +52,11 @@ export const evaluateResponse = ({
     if (validMatch.conditions?.length) {
       player.conditions.push(...validMatch.conditions);
     }
+    if (validMatch.removeConditions?.length) {
+      player.conditions = player.conditions.filter(
+        (item) => !validMatch.removeConditions.includes(item)
+      );
+    }
     if (validMatch.addToInventory?.length) {
       player.inventory.push(...validMatch.addToInventory);
     }
