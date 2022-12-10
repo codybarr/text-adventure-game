@@ -30,31 +30,6 @@ export const checkAnswerMatch = ({ answer, response }: AnswerResponse) => {
   return regex.test(response);
 };
 
-export const formatConditionsList = (conditions: Condition[]) =>
-  conditions.reduce(
-    (prev, curr, index) => `${prev}${index !== 0 ? "," : ""}${curr.name}`,
-    ""
-  );
-
-export const formatInventoryList = (inventory: Item[]) =>
-  inventory
-    .map(({ plural, name }: Item) => `${plural ? "" : "a "}${name}`)
-    .join(", ");
-
-export const logPlayer = (player: Player): void => {
-  const { conditions, inventory } = player;
-
-  if (conditions.length || inventory.length) {
-    console.log("\n");
-  }
-  if (conditions.length) {
-    console.log(white(`You are ${formatConditionsList(conditions)}`));
-  }
-  if (inventory.length) {
-    console.log(white(`You have ${formatInventoryList(inventory)}`));
-  }
-};
-
 export interface EvaluateResponseProps {
   getGameStep: Function;
   response: string;

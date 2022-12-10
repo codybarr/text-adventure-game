@@ -3,7 +3,6 @@ import {
   black,
   red,
   brightCyan,
-  white,
 } from "https://deno.land/std@0.162.0/fmt/colors.ts";
 
 import { clear } from "https://deno.land/x/clear/mod.ts";
@@ -15,10 +14,11 @@ import { logPlayer, evaluateResponse } from "./logic.ts";
 const QUESTION = "What would you like to do?";
 
 let loop = true;
-let player = { conditions: [], inventory: [MATCHES] };
+
 let getGameStep = GAME.BEGIN;
-let invalidMessage = '';
-let error = '';
+let player = { conditions: [], inventory: [MATCHES] };
+
+let invalidMessage, error = '';
 
 clear(true);
 
