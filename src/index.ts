@@ -5,14 +5,14 @@ import {
 import { clear } from "https://deno.land/x/clear/mod.ts";
 
 import * as GAME from "./game.ts";
-import { MATCHES } from "./items.ts";
+import { MATCHES_ITEM } from "./items.ts";
 import { logPlayer, logGameStepMessage, logInvalidMessage, logErrorMessage } from "./logHelpers.ts";
 import { evaluateResponse } from "./logic.ts";
 
 clear(true);
 
 const QUESTION = "What would you like to do?";
-const STARTING_ITEMS = [MATCHES];
+const STARTING_ITEMS = [MATCHES_ITEM];
 
 let getGameStep = GAME.BEGIN;
 let player = { conditions: [], inventory: STARTING_ITEMS };

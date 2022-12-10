@@ -1,4 +1,4 @@
-export const SWORD = {
+export const SWORD_ITEM = {
   plural: false,
   name: 'Sword',
 }
@@ -8,7 +8,7 @@ export const HATCHET_ITEM = {
   name: 'hatchet',
 }
 
-export const MATCHES = {
+export const MATCHES_ITEM = {
   plural: true,
   name: 'matches',
 }

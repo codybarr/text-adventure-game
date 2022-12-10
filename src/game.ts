@@ -1,5 +1,5 @@
 import { WET } from "./conditions.ts";
-import { MATCHES, HATCHET_ITEM } from "./items.ts";
+import { MATCHES_ITEM, HATCHET_ITEM } from "./items.ts";
 
 export const CHEST = () => ({
   message:
@@ -64,18 +64,18 @@ export const BACK_TO_SHORE = () => ({
     "With one sweeping motion you kick back up to the surface and race back to the shore. You get out and walk back to where you woke up.",
   valid: [
     {
-      answer: ["jump enter swim dive wade", "pool water"],
+      answer: ["jump enter swim dive wade in", "pool water"],
       nextStep: POOL,
-    },
-    {
-      answer: ["light", "match"],
-      nextStep: MATCH,
     },
   ],
   invalid: [
     {
       answer: ["pick pickup grab", "torch"],
       message: "There are no torches.",
+    },
+    {
+      answer: ["light", "match"],
+      message: "Your matches are soaked."
     },
   ],
 });
@@ -121,28 +121,23 @@ export const MATCH = () => ({
 });
 
 export const BEGIN = ({ inventory }) => {
-  let valid = [
-    {
-      answer: ["jump enter swim dive wade in", "pool water"],
-      nextStep: POOL,
-      conditions: [WET],
-      removeFromInventory: [MATCHES],
-    },
-  ];
-
-  if (inventory.some((item) => item.name === MATCHES.name)) {
-    valid.push({
-      answer: ["light", "match"],
-      nextStep: MATCH,
-      conditions: [],
-      removeFromInventory: [],
-    });
-  }
-
   return {
     message:
       "You awaken in a dark, damp cave. You are sitting by a pool of water.",
-    valid,
+    valid: [
+      {
+        answer: ["jump enter swim dive wade in", "pool water"],
+        nextStep: POOL,
+        conditions: [WET],
+        removeFromInventory: [MATCHES_ITEM],
+      },
+      {
+        answer: ["light", "match"],
+        nextStep: MATCH,
+        conditions: [],
+        removeFromInventory: [],
+      }
+    ],
     invalid: [
       {
         answer: ["pick pickup grab", "torch"],
