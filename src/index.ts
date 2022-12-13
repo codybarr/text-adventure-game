@@ -4,7 +4,7 @@ import {
 
 import { clear } from "https://deno.land/x/clear/mod.ts"
 
-import * as GAME from "./game.ts"
+import * as GAME from "./GameSteps/introSteps.ts"
 import { MATCHES_ITEM } from "./items.ts"
 import { logPlayer, logGameStepMessage, logInvalidMessage, logError } from "./logHelpers.ts"
 import { evaluateResponse } from "./logic.ts"
