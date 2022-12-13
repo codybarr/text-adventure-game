@@ -1,4 +1,3 @@
-import * as GAME from "./game.ts";
 import {
   AnswerResponse,
   EvaluateResponseProps,

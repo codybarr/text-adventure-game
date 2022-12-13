@@ -125,7 +125,7 @@ export const MATCH = () => ({
   invalid: [],
 });
 
-export const BEGIN = ({ inventory }) => {
+export const BEGIN = () => {
   return {
     message:
       "You awaken in a dark, damp cave. You are sitting by a pool of water.",

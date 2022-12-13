@@ -1,3 +1,10 @@
+export interface GameState {
+  invalidMessage?: string;
+  errorMessage?: string;
+  getGameStep: Function;
+  player: Player;
+}
+
 export interface AnswerResponse {
   player?: Player,
   answer: string[]
@@ -47,10 +54,3 @@ export interface GameStepEvaluation {
   updatedGetGameStep: Function;
   updatedPlayer: Player;
 } 
-
-export interface GameState {
-  invalidMessage?: string;
-  errorMessage?: string;
-  getGameStep: Function;
-  player: Player;
-}
