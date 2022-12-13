@@ -1,12 +1,12 @@
-import { WET, ABOUT_TO_DROWN, DEAD } from "./conditions.ts";
-import { MATCHES_ITEM, HATCHET_ITEM } from "./items.ts";
+import { WET, ABOUT_TO_DROWN, DEAD } from "./conditions.ts"
+import { MATCHES_ITEM, HATCHET_ITEM } from "./items.ts"
 
 export const CHEST = () => ({
   message:
     "You smash the lock on the chest and it opens! Inside you see gold and a sword.",
   valid: [],
   invalid: [],
-});
+})
 
 export const HATCHET = () => ({
   message: "You pick up the hatchet.",
@@ -17,14 +17,14 @@ export const HATCHET = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const MERMAID = () => ({
   message:
     'As you bravely approach the creature you hear a soft beautiful voice begin singing. You take a closer look at the creature and you notice its long feminine hair and fish tail. It sings, "Is it you? Is that you? The one to bring about the truth?"',
   valid: [],
   invalid: [],
-});
+})
 
 export const MERMAID_SURFACES = () => ({
   message:
@@ -36,13 +36,13 @@ export const MERMAID_SURFACES = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const DROWNED = () => ({
   message: "You've Drowned.",
   valid: [],
   invalid: [],
-});
+})
 
 export const SHADOW_SIGHTING = () => ({
   message:
@@ -61,7 +61,7 @@ export const SHADOW_SIGHTING = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const BACK_TO_SHORE = () => ({
   message:
@@ -82,7 +82,7 @@ export const BACK_TO_SHORE = () => ({
       message: "Your matches are soaked."
     },
   ],
-});
+})
 
 export const POOL_DEPTHS = () => ({
   message:
@@ -99,7 +99,7 @@ export const POOL_DEPTHS = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const POOL = () => ({
   message: "You enter the pool of water.",
@@ -110,7 +110,7 @@ export const POOL = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const MATCH = () => ({
   message:
@@ -123,7 +123,7 @@ export const MATCH = () => ({
     },
   ],
   invalid: [],
-});
+})
 
 export const BEGIN = () => {
   return {
@@ -149,5 +149,5 @@ export const BEGIN = () => {
         message: "There are no torches.",
       },
     ],
-  };
-};
+  }
+}

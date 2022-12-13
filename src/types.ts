@@ -1,8 +1,8 @@
 export interface GameState {
-  invalidMessage?: string;
-  errorMessage?: string;
-  getGameStep: Function;
-  player: Player;
+  invalidMessage?: string
+  errorMessage?: string
+  getGameStep: Function
+  player: Player
 }
 
 export interface AnswerResponse {
@@ -43,14 +43,14 @@ export interface Item {
 }
 
 export interface EvaluateResponseProps {
-  getGameStep: Function;
-  response: string;
-  player: Player;
+  getGameStep: Function
+  response: string
+  player: Player
 }
 
 export interface GameStepEvaluation {
-  updatedInvalidMessage?: string;
-  updatedErrorMessage?: string;
-  updatedGetGameStep: Function;
-  updatedPlayer: Player;
+  updatedInvalidMessage?: string
+  updatedErrorMessage?: string
+  updatedGetGameStep: Function
+  updatedPlayer: Player
 } 
