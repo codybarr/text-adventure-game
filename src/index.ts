@@ -8,42 +8,44 @@ import * as GAME from "./game.ts";
 import { MATCHES_ITEM } from "./items.ts";
 import { logPlayer, logGameStepMessage, logInvalidMessage, logError } from "./logHelpers.ts";
 import { evaluateResponse } from "./logic.ts";
+import { GameState } from "./types.ts";
 
 clear(true);
 
 const QUESTION = "What would you like to do?";
 const STARTING_ITEMS = [MATCHES_ITEM];
 
-let gameState = {
+let gameState: GameState = {
   getGameStep: GAME.BEGIN,
   player: { conditions: [], inventory: STARTING_ITEMS },
   invalidMessage: '',
-  error: ''
+  errorMessage: ''
 }
 
 let loop = true;
 while (loop) {
-  const { getGameStep, player, error, invalidMessage } = gameState;
+  const { getGameStep, player, errorMessage = '', invalidMessage = '' } = gameState;
+
   const gameStep = getGameStep(player);
-  logGameStepMessage(gameStep);
+  logGameStepMessage(gameStep.message);
 
   logInvalidMessage(invalidMessage);
-  logError(error);
+  logError(errorMessage);
   logPlayer(player);
 
-  const response = prompt(brightCyan(QUESTION));
+  const response = prompt(brightCyan(QUESTION)) || 'fail. You got this!';
 
   const {
-    error: updatedError,
-    getGameStep: updatedGetGameStep,
-    invalidMessage: updatedInvalidMessage,
+    updatedGetGameStep,
     updatedPlayer,
+    updatedErrorMessage,
+    updatedInvalidMessage,
   } = evaluateResponse({ getGameStep, response, player });
 
   gameState = {
     getGameStep: updatedGetGameStep,
     player: updatedPlayer,
     invalidMessage: updatedInvalidMessage,
-    error: updatedError,
+    errorMessage: updatedErrorMessage,
   }
 }

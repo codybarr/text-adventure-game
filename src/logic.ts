@@ -1,10 +1,10 @@
 import * as GAME from "./game.ts";
 import {
   AnswerResponse,
-  GameStepVerification,
   EvaluateResponseProps,
   InvalidStep,
   ValidStep,
+  GameStepEvaluation,
 } from "./types.ts";
 
 const answerMatchRegex = (answer: string[]) => {
@@ -31,22 +31,22 @@ export const evaluateResponse = ({
   getGameStep,
   response,
   player,
-}: EvaluateResponseProps): GameStepVerification => {
+}: EvaluateResponseProps): GameStepEvaluation => {
   const { valid, invalid } = getGameStep(player);
 
   const invalidMatch = invalid.find(({ answer }: InvalidStep) =>
-    checkAnswerMatch({ answer, response, player })
+    checkAnswerMatch({ answer, response })
   );
   if (invalidMatch) {
     return {
-      invalidMessage: invalidMatch.message,
-      getGameStep,
+      updatedInvalidMessage: invalidMatch.message,
+      updatedGetGameStep: getGameStep,
       updatedPlayer: player,
     };
   }
 
   const validMatch = valid.find(({ answer }: ValidStep) =>
-    checkAnswerMatch({ answer, response, updatedPlayer: player })
+    checkAnswerMatch({ answer, response })
   );
   if (validMatch) {
     if (validMatch.conditions?.length) {
@@ -65,12 +65,12 @@ export const evaluateResponse = ({
         (item) => !validMatch.removeFromInventory.includes(item)
       );
     }
-    return { getGameStep: validMatch.nextStep, updatedPlayer: player };
+    return { updatedGetGameStep: validMatch.nextStep, updatedPlayer: player };
   }
 
   return {
-    error: `You cannot ${response}`,
-    getGameStep,
+    updatedErrorMessage: `You cannot ${response}`,
+    updatedGetGameStep: getGameStep,
     updatedPlayer: player,
   };
 };

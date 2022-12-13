@@ -21,7 +21,7 @@ export const logPlayer = (player: Player): void => {
 };
 
 function formatConditionsList(conditions: Condition[]) {
-  const shouldLogAnd = (index) => (index === conditions.length - 1) && conditions.length > 1;
+  const shouldLogAnd = (index: number) => (index === conditions.length - 1) && conditions.length > 1;
   return conditions.reduce(
     (prev, curr, index) => `${prev}${index !== 0 ? ", " : ""}${shouldLogAnd(index) ? 'and ' : ''}${curr.name}`,
     ""
@@ -34,21 +34,21 @@ function formatInventoryList(inventory: Item[]) {
     .join(", ");
 }
 
-export const logGameStepMessage = ({ message }) => {
+export const logGameStepMessage = (message: string ) => {
   console.log("\n");
   console.log(bgGreen(black(message)));
 }
 
-export const logInvalidMessage = (invalidMessage) => {
+export const logInvalidMessage = (invalidMessage: string) => {
   if (invalidMessage) {
     console.log("\n");
     console.log(red(invalidMessage));
   }
 }
 
-export const logError = (error) => {
-  if (error) {
+export const logError = (errorMessage: string) => {
+  if (errorMessage) {
     console.log("\n");
-    console.log(red(error));
+    console.log(red(errorMessage));
   }
 }
