@@ -46,7 +46,7 @@ export const logInvalidMessage = (invalidMessage) => {
   }
 }
 
-export const logErrorMessage = (error) => {
+export const logError = (error) => {
   if (error) {
     console.log("\n");
     console.log(red(error));

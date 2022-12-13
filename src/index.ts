@@ -6,7 +6,7 @@ import { clear } from "https://deno.land/x/clear/mod.ts";
 
 import * as GAME from "./game.ts";
 import { MATCHES_ITEM } from "./items.ts";
-import { logPlayer, logGameStepMessage, logInvalidMessage, logErrorMessage } from "./logHelpers.ts";
+import { logPlayer, logGameStepMessage, logInvalidMessage, logError } from "./logHelpers.ts";
 import { evaluateResponse } from "./logic.ts";
 
 clear(true);
@@ -14,30 +14,36 @@ clear(true);
 const QUESTION = "What would you like to do?";
 const STARTING_ITEMS = [MATCHES_ITEM];
 
-let getGameStep = GAME.BEGIN;
-let player = { conditions: [], inventory: STARTING_ITEMS };
-let invalidMessage, error = '';
+let gameState = {
+  getGameStep: GAME.BEGIN,
+  player: { conditions: [], inventory: STARTING_ITEMS },
+  invalidMessage: '',
+  error: ''
+}
 
 let loop = true;
 while (loop) {
+  const { getGameStep, player, error, invalidMessage } = gameState;
   const gameStep = getGameStep(player);
   logGameStepMessage(gameStep);
 
   logInvalidMessage(invalidMessage);
-  logErrorMessage(error);
+  logError(error);
   logPlayer(player);
 
   const response = prompt(brightCyan(QUESTION));
 
   const {
-    error: newError,
-    getGameStep: newgetGameStep,
-    invalidMessage: newInvalidMessage,
+    error: updatedError,
+    getGameStep: updatedGetGameStep,
+    invalidMessage: updatedInvalidMessage,
     updatedPlayer,
   } = evaluateResponse({ getGameStep, response, player });
 
-  getGameStep = newgetGameStep;
-  player = updatedPlayer;
-  invalidMessage = newInvalidMessage;
-  error = newError;
+  gameState = {
+    getGameStep: updatedGetGameStep,
+    player: updatedPlayer,
+    invalidMessage: updatedInvalidMessage,
+    error: updatedError,
+  }
 }
