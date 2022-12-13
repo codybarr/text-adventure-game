@@ -2,7 +2,8 @@ export interface GameState {
   invalidMessage?: string
   errorMessage?: string
   getGameStep: Function
-  player: Player
+  player: Player,
+  history: GameStep[],
 }
 
 export interface AnswerResponse {
@@ -13,19 +14,21 @@ export interface AnswerResponse {
 
 export interface Step {
   answer: string[]
-  message: string
 }
 
 export interface ValidStep extends Step {
-  nextStep: string
+  nextStep: Function
 }
 
-export interface InvalidStep extends Step { }
+export interface InvalidStep extends Step {
+  message: string,
+}
 
 export interface GameStep {
   message: string
   invalid: InvalidStep[]
   valid: ValidStep[]
+  conditions?: Condition[]
 }
 
 export interface Player {
@@ -46,6 +49,7 @@ export interface EvaluateResponseProps {
   getGameStep: Function
   response: string
   player: Player
+  history: GameStep[]
 }
 
 export interface GameStepEvaluation {

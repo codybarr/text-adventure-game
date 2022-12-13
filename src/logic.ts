@@ -30,8 +30,9 @@ export const evaluateResponse = ({
   getGameStep,
   response,
   player,
+  history,
 }: EvaluateResponseProps): GameStepEvaluation => {
-  const { valid, invalid } = getGameStep(player)
+  const { valid, invalid } = getGameStep({ player, history })
 
   const invalidMatch = invalid.find(({ answer }: InvalidStep) =>
     checkAnswerMatch({ answer, response })

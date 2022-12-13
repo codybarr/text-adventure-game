@@ -19,14 +19,15 @@ let gameState: GameState = {
   getGameStep: GAME.BEGIN,
   player: { conditions: [], inventory: STARTING_ITEMS },
   invalidMessage: '',
-  errorMessage: ''
+  errorMessage: '',
+  history: []
 }
 
 let loop = true
 while (loop) {
-  const { getGameStep, player, errorMessage = '', invalidMessage = '' } = gameState
+  const { getGameStep, player, errorMessage = '', invalidMessage = '', history } = gameState
 
-  const gameStep = getGameStep(player)
+  const gameStep = getGameStep({ player, history })
   logGameStepMessage(gameStep.message)
 
   logInvalidMessage(invalidMessage)
@@ -40,9 +41,13 @@ while (loop) {
     updatedPlayer,
     updatedErrorMessage,
     updatedInvalidMessage,
-  } = evaluateResponse({ getGameStep, response, player })
+  } = evaluateResponse({ getGameStep, response, player, history })
 
   gameState = {
+    history: [
+      ...gameState.history,
+      gameStep
+    ],
     getGameStep: updatedGetGameStep,
     player: updatedPlayer,
     invalidMessage: updatedInvalidMessage,

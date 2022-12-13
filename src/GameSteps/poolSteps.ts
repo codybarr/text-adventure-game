@@ -1,4 +1,5 @@
 import { ABOUT_TO_DROWN, DEAD, WET } from "../conditions.ts";
+import { BEGIN } from "./introSteps.ts";
 
 export const MERMAID = () => ({
 	message:
@@ -76,7 +77,7 @@ export const POOL_DEPTHS = () => ({
 		},
 		{
 			answer: ["swim get", "away surface shore"],
-			nextStep: BACK_TO_SHORE,
+			nextStep: BEGIN,
 		},
 	],
 	invalid: [],

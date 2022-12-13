@@ -1,5 +1,6 @@
 import { WET } from "../conditions.ts";
 import { HATCHET_ITEM, MATCHES_ITEM } from '../items.ts'
+import { GameStep, Player, Step, ValidStep } from "../types.ts";
 import { POOL } from "./poolSteps.ts";
 
 export const CHEST = () => ({
@@ -33,24 +34,27 @@ export const MATCH = () => ({
   invalid: [],
 })
 
-export const BEGIN = () => {
+export const BEGIN = ({ player, history }: { player: Player, history: Step[] }): GameStep => {
+  let valid = [
+    {
+      answer: ["jump enter swim dive wade in", "pool water"],
+      nextStep: POOL,
+      conditions: [WET],
+      removeFromInventory: [MATCHES_ITEM],
+    },
+  ];
+
+  if (!player.conditions.includes(WET))
+    valid.push({
+      answer: ["light", "match"],
+      nextStep: MATCH,
+      conditions: [],
+      removeFromInventory: [],
+    })
+
   return {
-    message:
-      "You awaken in a dark, damp cave. You are sitting by a pool of water.",
-    valid: [
-      {
-        answer: ["jump enter swim dive wade in", "pool water"],
-        nextStep: POOL,
-        conditions: [WET],
-        removeFromInventory: [MATCHES_ITEM],
-      },
-      {
-        answer: ["light", "match"],
-        nextStep: MATCH,
-        conditions: [],
-        removeFromInventory: [],
-      }
-    ],
+    message: history.length > 1 ? "With one sweeping motion you kick back up to the surface and race back to the shore. You get out and walk back to where you woke up." : "You awaken in a dark, damp cave. You are sitting by a pool of water.",
+    valid,
     invalid: [
       {
         answer: ["pick pickup grab", "torch"],
