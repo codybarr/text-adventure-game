@@ -10,7 +10,7 @@ export const MERMAID = () => ({
 
 export const MERMAID_SURFACES = () => ({
 	message:
-		"As you reach the surface and desperately fill your lungs with air, you a creature shoot up out of the water and beach itself on a large rock outside of the pool.",
+		"As you reach the surface and desperately fill your lungs with air, you a see creature shoot up out of the water and beach itself on a large rock outside of the pool.",
 	valid: [
 		{
 			answer: ["swim go approach", "shore creature it"],
