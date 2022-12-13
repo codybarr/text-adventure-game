@@ -45,27 +45,6 @@ export const SHADOW_SIGHTING = () => ({
 	invalid: [],
 })
 
-export const BACK_TO_SHORE = () => ({
-	message:
-		"With one sweeping motion you kick back up to the surface and race back to the shore. You get out and walk back to where you woke up.",
-	valid: [
-		{
-			answer: ["jump enter swim dive wade in", "pool water"],
-			nextStep: POOL,
-		},
-	],
-	invalid: [
-		{
-			answer: ["pick pickup grab", "torch"],
-			message: "There are no torches.",
-		},
-		{
-			answer: ["light", "match"],
-			message: "Your matches are soaked."
-		},
-	],
-})
-
 export const POOL_DEPTHS = () => ({
 	message:
 		"You take a deep breath and dive down into the depths of the pool. You see a faint shadow approaching you slowly.",

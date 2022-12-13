@@ -1,9 +1,13 @@
+import { array } from "https://deno.land/x/fp_ts@v2.11.4/mod.ts";
+const { intersection } = array;
+
 import {
   AnswerResponse,
   EvaluateResponseProps,
   InvalidStep,
   ValidStep,
   GameStepEvaluation,
+
 } from "./types.ts"
 
 const answerMatchRegex = (answer: string[]) => {
@@ -32,6 +36,13 @@ export const evaluateResponse = ({
   player,
   history,
 }: EvaluateResponseProps): GameStepEvaluation => {
+  if (response === 'go back') {
+    return {
+      updatedGetGameStep: history.pop() || getGameStep,
+      updatedPlayer: player,
+    }
+  }
+
   const { valid, invalid } = getGameStep({ player, history })
 
   const invalidMatch = invalid.find(({ answer }: InvalidStep) =>
@@ -50,7 +61,7 @@ export const evaluateResponse = ({
   )
   if (validMatch) {
     if (validMatch.conditions?.length) {
-      player.conditions.push(...validMatch.conditions)
+      player.conditions = Array.from(new Set([...player.conditions, ...validMatch.conditions]))
     }
     if (validMatch.removeConditions?.length) {
       player.conditions = player.conditions.filter(
@@ -58,7 +69,7 @@ export const evaluateResponse = ({
       )
     }
     if (validMatch.addToInventory?.length) {
-      player.inventory.push(...validMatch.addToInventory)
+      player.inventory = Array.from(new Set([...player.inventory, ...validMatch.addToInventory]))
     }
     if (validMatch.removeFromInventory?.length) {
       player.inventory = player.inventory.filter(

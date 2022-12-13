@@ -3,7 +3,7 @@ export interface GameState {
   errorMessage?: string
   getGameStep: Function
   player: Player,
-  history: GameStep[],
+  history: Function[],
 }
 
 export interface AnswerResponse {
@@ -49,7 +49,7 @@ export interface EvaluateResponseProps {
   getGameStep: Function
   response: string
   player: Player
-  history: GameStep[]
+  history: Function[]
 }
 
 export interface GameStepEvaluation {

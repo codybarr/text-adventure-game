@@ -34,7 +34,7 @@ export const MATCH = () => ({
   invalid: [],
 })
 
-export const BEGIN = ({ player, history }: { player: Player, history: Step[] }): GameStep => {
+export const BEGIN = ({ player, history }: { player: Player, history: Function[] }): GameStep => {
   let valid = [
     {
       answer: ["jump enter swim dive wade in", "pool water"],

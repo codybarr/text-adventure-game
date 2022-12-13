@@ -46,7 +46,7 @@ while (loop) {
   gameState = {
     history: [
       ...gameState.history,
-      gameStep
+      getGameStep
     ],
     getGameStep: updatedGetGameStep,
     player: updatedPlayer,
